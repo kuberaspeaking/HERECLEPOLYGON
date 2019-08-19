@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- SCRIPTS -->
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+<link rel="stylesheet" type="text/css" href="http://js.api.here.com/v3/3.0/mapsjs-ui.css"/>
+<!-- <link rel="stylesheet" type = "text/css" href="css/mystyle.css"> -->
+</head>
+<body>
+<div id="map" style="width: 100vw; height: 100vh; background: #39B6B3; float: left" ></div> 
+
+
+<script>
+
+/**
+ * Boilerplate map initialization code starts below:
+ */
+
+// set up containers for the map  + panel
+var mapContainer = document.getElementById('map');
+  // routeInstructionsContainer = document.getElementById('panel');
+
+//Step 1: initialize communication with the platform
+let M = {
+  'Init': { // developer.here.com for app_id and app_code
+      "app_id":   "Ilng5dKKaVBPRfk4Olj5",
+      "app_code": "W-DlT_lYkQq-mWDJMM-UCw",
+      // "api_key" : window.api_key,
+      "useHTTPS": true
+  }
+};
+
+var platform = new H.service.Platform(M.Init);
+
+var defaultLayers = platform.createDefaultLayers();
+// Set center of the map
+var mapcenter= {lat:27.2170, lng:77.4895};
+
+//Step 2: initialize a map - this map is centered over Berlin
+var map = new H.Map(mapContainer,
+  defaultLayers.normal.map,{
+  center: mapcenter,
+  zoom: 15
+});
+//Step 3: make the map interactive
+// MapEvents enables the event system
+// Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+// Create the default UI components
+var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+var getCustomLocationService = platform.getCustomLocationService();
+  //Display layer as a Tile 
+ // create tile provider and layer that displays CLE layer
+
+// var R_icon = new H.map.Icon('img/warehouse.png');
+var layer_provider = new mapsjs.service.extension.customLocation.TileProvider(getCustomLocationService, 
+  {
+  layerId: 'TEST3', 
+  min: 15
+  }, 
+  {
+  resultType: mapsjs.service.extension.TileProvider.ResultType.POLYGON 
+  });
+
+var rest_LAYER = new mapsjs.map.layer.TileLayer(layer_provider);
+map.addLayer(rest_LAYER);
+</script>
+</body>
+</html>
