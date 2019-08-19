@@ -43,7 +43,7 @@ var mapcenter= {lat:27.2170, lng:77.4895};
 var map = new H.Map(mapContainer,
   defaultLayers.normal.map,{
   center: mapcenter,
-  zoom: 15
+  zoom: 13
 });
 //Step 3: make the map interactive
 // MapEvents enables the event system
@@ -60,7 +60,7 @@ var getCustomLocationService = platform.getCustomLocationService();
 // var R_icon = new H.map.Icon('img/warehouse.png');
 var layer_provider = new mapsjs.service.extension.customLocation.TileProvider(getCustomLocationService, 
   {
-  layerId: 'TEST3', 
+  layerId: 'TEST', 
   min: 15
   }, 
   {
